@@ -41,7 +41,7 @@ const Hero1 = ({ className }: Hero1Props) => {
           </div>
 
           {/* Right Image */}
-          <div className="relative w-full aspect-video rounded-xl overflow-hidden">
+          <div className="relative w-full  aspect-video rounded-full overflow-hidden">
             <Image
               src="https://images.pexels.com/photos/10254479/pexels-photo-10254479.jpeg"
               alt="Delicious restaurant food"
