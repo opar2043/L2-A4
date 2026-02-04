@@ -60,14 +60,8 @@ interface Navbar1Props {
 }
 
 const Navbar1 = ({
-  logo = {
-    url: "https://www.shadcnblocks.com",
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
-    alt: "logo",
-    title: "Food Hub",
-  },
+
   menu = [
-    { title: "Home", url: "/" },
     {
       title: "About",
       url: "/about",
@@ -99,11 +93,12 @@ const Navbar1 = ({
         <nav className="hidden items-center justify-between lg:flex">
           <div className="flex items-center gap-6">
             {/* Logo */}
-            <a href={logo.url} className="flex items-center gap-2">
-              <span className="text-lg textcolor font-semibold tracking-tighter">
-                {logo.title}
-              </span>
-            </a>
+            
+              <span className="text-xl italic font-bold textcolor font-semibold tracking-tighter">
+                FOODHUB
+                </span>
+              
+           
           </div>
           <div className="flex gap-2">
             <div className="flex items-center">
@@ -129,7 +124,7 @@ const Navbar1 = ({
           <div className="flex items-center justify-between ">
             {/* Logo */}
             <div className="flex items-center gap-2">
-              <img src='/public/next.svg' className="max-h-8 dark:invert" alt={logo.alt} />
+
 
               <p className="textcolor font-bold">Foodhub</p>
             </div>
@@ -142,17 +137,7 @@ const Navbar1 = ({
                   </Button>
                 </SheetTrigger>
                 <SheetContent className="overflow-y-auto">
-                  <SheetHeader>
-                    <SheetTitle>
-                      <Link href={logo.url} className="flex items-center gap-2">
-                        <img
-                          src={logo.src}
-                          className="max-h-8 dark:invert"
-                          alt={logo.alt}
-                        />
-                      </Link>
-                    </SheetTitle>
-                  </SheetHeader>
+
                   <div className="flex flex-col gap-6 p-4">
                     <Accordion
                       type="single"

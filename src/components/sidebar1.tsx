@@ -1,37 +1,24 @@
-import {
-  BarChart3,
-  ClipboardList,
-  HelpCircle,
-  LayoutDashboard,
-  Settings,
-} from "lucide-react";
-
-import { cn } from "@/lib/utils";
-
-
-
+import { LayoutDashboard, ClipboardList, BarChart3 } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
-  SidebarHeader,
-  SidebarInset,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
   SidebarRail,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
+import Link from "next/link";
+
+type Role = "admin" | "provider" | "customer";
 
 type NavItem = {
   label: string;
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  icon: React.ElementType;
   href: string;
-  isActive?: boolean;
 };
 
 type NavGroup = {
@@ -39,55 +26,14 @@ type NavGroup = {
   items: NavItem[];
 };
 
-type SidebarData = {
-  logo: {
-    src: string;
-    alt: string;
-    title: string;
-    description: string;
-  };
-  navGroups: NavGroup[];
-  footerGroup: NavGroup;
-};
-
-const sidebarData: SidebarData = {
-  logo: {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblocks-logo.svg",
-    alt: "Food Hub",
-    title: "Food Hub",
-    description: "Make your order quickly",
-  },
-  navGroups: [
-    {
-      title: "Overview",
-      items: [
-        {
-          label: "Dashboard",
-          icon: LayoutDashboard,
-          href: "#",
-          isActive: true,
-        },
-        { label: "Tasks", icon: ClipboardList, href: "#" },
-        { label: "Roadmap", icon: BarChart3, href: "#" },
-      ],
-    },
-  ],
-  footerGroup: {
-    title: "Support",
-    items: [
-      { label: "Help Center", icon: HelpCircle, href: "#" },
-      { label: "Settings", icon: Settings, href: "#" },
-    ],
-  },
-};
-
-const sidebarByRole = {
+const sidebarByRole: Record<Role, NavGroup[]> = {
   admin: [
     {
       title: "Admin",
       items: [
         { label: "Dashboard", icon: LayoutDashboard, href: "/admin" },
         { label: "Users", icon: ClipboardList, href: "/admin/users" },
+        { label: "Home", icon: ClipboardList, href: "/" },
       ],
     },
   ],
@@ -97,7 +43,17 @@ const sidebarByRole = {
       title: "Provider",
       items: [
         { label: "Dashboard", icon: LayoutDashboard, href: "/provider" },
-        { label: "Tasks", icon: ClipboardList, href: "/provider/tasks" },
+        {
+          label: "Add Product",
+          icon: ClipboardList,
+          href: "/provider/addproducts",
+        },
+        {
+          label: "All Products",
+          icon: BarChart3,
+          href: "/provider/all-products",
+        },
+        { label: "Home", icon: ClipboardList, href: "/" },
       ],
     },
   ],
@@ -108,52 +64,19 @@ const sidebarByRole = {
       items: [
         { label: "Dashboard", icon: LayoutDashboard, href: "/customer" },
         { label: "Orders", icon: BarChart3, href: "/customer/orders" },
+        { label: "Home", icon: ClipboardList, href: "/" },
       ],
     },
   ],
 };
 
-
-const SidebarLogo = ({ logo }: { logo: SidebarData["logo"] }) => {
-  return (
-    <SidebarMenu>
-      <SidebarMenuItem>
-        <SidebarMenuButton size="lg">
-          <div className="flex aspect-square size-8 items-center justify-center rounded-sm bg-primary">
-            <img
-              src={logo.src}
-              alt={logo.alt}
-              className="size-6 text-primary-foreground invert dark:invert-0"
-            />
-          </div>
-          <div className="flex flex-col gap-0.5 leading-none">
-            <span className="font-medium">{logo.title}</span>
-            <span className="text-xs text-muted-foreground">
-              {logo.description}
-            </span>
-          </div>
-        </SidebarMenuButton>
-      </SidebarMenuItem>
-    </SidebarMenu>
-  );
-};
-
-const AppSidebar = ({
-  role,
-  ...props
-}: React.ComponentProps<typeof Sidebar> & {
-  role: "admin" | "provider" | "customer";
-}) => {
-  const navGroups = sidebarByRole[role];
+function AppSidebar({ role }: { role: Role }) {
+  const groups = sidebarByRole[role];
 
   return (
-    <Sidebar {...props}>
-      <SidebarHeader>
-        <SidebarLogo logo={sidebarData.logo} />
-      </SidebarHeader>
-
+    <Sidebar>
       <SidebarContent>
-        {navGroups.map((group) => (
+        {groups.map((group) => (
           <SidebarGroup key={group.title}>
             <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
 
@@ -162,10 +85,13 @@ const AppSidebar = ({
                 {group.items.map((item) => (
                   <SidebarMenuItem key={item.label}>
                     <SidebarMenuButton asChild>
-                      <a href={item.href} className="flex gap-2">
+                      <Link
+                        href={item.href}
+                        className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-muted"
+                      >
                         <item.icon className="size-4" />
                         {item.label}
-                      </a>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
@@ -178,20 +104,12 @@ const AppSidebar = ({
       <SidebarRail />
     </Sidebar>
   );
-};
-
-
-interface Sidebar1Props {
-  className?: string;
-  role: "admin" | "provider" | "customer";
 }
 
-const Sidebar1 = ({ className, role }: Sidebar1Props) => {
+export function Sidebar1({ role }: { role: Role }) {
   return (
-    <SidebarProvider className={cn(className)}>
+    <SidebarProvider>
       <AppSidebar role={role} />
     </SidebarProvider>
   );
-};
-
-export { Sidebar1 };
+}
