@@ -72,6 +72,7 @@ const Navbar1 = ({
       title: "About",
       url: "/about",
     },
+
     {
       title: "Menus",
       url: "/menu",
@@ -79,6 +80,10 @@ const Navbar1 = ({
     {
       title: "Contact",
       url: "/contact",
+    },
+    {
+      title: "Dashboard",
+      url: "/dashboard",
     },
   ],
   auth = {
@@ -124,7 +129,7 @@ const Navbar1 = ({
           <div className="flex items-center justify-between ">
             {/* Logo */}
             <div className="flex items-center gap-2">
-              <img src={""} className="max-h-8 dark:invert" alt={logo.alt} />
+              <img src='/public/next.svg' className="max-h-8 dark:invert" alt={logo.alt} />
 
               <p className="textcolor font-bold">Foodhub</p>
             </div>
@@ -139,13 +144,13 @@ const Navbar1 = ({
                 <SheetContent className="overflow-y-auto">
                   <SheetHeader>
                     <SheetTitle>
-                      <a href={logo.url} className="flex items-center gap-2">
+                      <Link href={logo.url} className="flex items-center gap-2">
                         <img
                           src={logo.src}
                           className="max-h-8 dark:invert"
                           alt={logo.alt}
                         />
-                      </a>
+                      </Link>
                     </SheetTitle>
                   </SheetHeader>
                   <div className="flex flex-col gap-6 p-4">
@@ -189,12 +194,12 @@ const renderMenuItem = (item: MenuItem) => {
 
   return (
     <NavigationMenuItem key={item.title}>
-      <NavigationMenuLink
+      <Link
         href={item.url}
         className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground"
       >
         {item.title}
-      </NavigationMenuLink>
+      </Link>
     </NavigationMenuItem>
   );
 };
