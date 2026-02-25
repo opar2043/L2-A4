@@ -4,13 +4,15 @@ import Menus from "@/components/Layouts/Menus";
 import OurProcess from "@/components/Layouts/OurProcess";
 import OurStory from "@/components/Layouts/OurStory";
 import RestaurantServices from "@/components/Layouts/RestaurentService";
+import MenuPage from "./menu/page";
 
 
 export default function Home() {
   return (
     <div className="w-11/12 mx-auto max-w-7xl">
        <Hero1></Hero1>
-       <Menus></Menus>
+       {/* <Menus></Menus> */}
+       <MenuPage></MenuPage>
        <OurProcess></OurProcess>
        <RestaurantServices></RestaurantServices>
        <OurStory></OurStory>

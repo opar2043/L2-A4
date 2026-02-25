@@ -1,6 +1,8 @@
+import Link from "next/link";
+
 export default function Card({ item }) {
   return (
-    <div className="border border-gray-200 rounded-sm overflow-hidden hover:shadow-lg transition bg-white">
+    <Link href={`/menu/${item._id}`} className="border border-gray-200 rounded-sm overflow-hidden hover:shadow-lg transition bg-white">
       {/* Image with availability overlay */}
       <div className="h-[200px] w-full overflow-hidden relative">
         <img
@@ -49,6 +51,6 @@ export default function Card({ item }) {
           Add to Cart
         </button>
       </div>
-    </div>
+    </Link>
   );
 }

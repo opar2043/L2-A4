@@ -1,9 +1,31 @@
+import axiosinstance from "./axiosinstance";
+
 const getmenus = async () => {
-  const data = await fetch("https://server-food-ashy.vercel.app/menu");
-  const menu = await data.json();
-  return menu
+  const res = await axiosinstance.get('/menu');
+  const data = res.data;
+  return data
+};
+const getSingleMenu = async (id : string) => {
+  const res = await axiosinstance.get(`/menu/${id}`);
+  const data = res.data;
+  return data
 };
 
+const deleteMenu = async (id : string) => {
+  const res = await axiosinstance.delete(`/menu/${id}`);
+  const data = res.data;
+  return data
+};
+const updateMenu = async (id : string) => {
+  const res = await axiosinstance.patch(`/menu/${id}`);
+  const data = res.data;
+  return data
+};
+
+
 export  const menuService = {
-   getmenus
+   getmenus,
+   getSingleMenu,
+   deleteMenu,
+   updateMenu
 }
