@@ -7,15 +7,13 @@ import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 
 const fromSchema = z.object({
-  name: z.string().min(1, "This Field is required"),
   password: z.string().min(6, "Password must be 6 character"),
 email: z.string().email("Invalid email address")
 });
 
-const SimpleForm = () => {
+const LoginForm = () => {
   const form = useForm({
     defaultValues: {
-      name: "",
       email: "",
       password: "",
     },
@@ -23,10 +21,10 @@ const SimpleForm = () => {
       onSubmit: fromSchema,
     },
     onSubmit: async ({ value }) => {
-      const toastId = toast.loading("Creationg User");
+      const toastId = toast.loading("Loging User");
       try {
-        const { data, error } = await authClient.signUp.email(value);
-        toast.success("User Created Succesfully" , {id : toastId})
+        const { data, error } = await authClient.signIn.email(value);
+        toast.success("User Logged In Succesfully" , {id : toastId})
       } catch (error) {
         toast.error("Something went wrong" , {id: toastId})
       }
@@ -41,28 +39,6 @@ const SimpleForm = () => {
           form.handleSubmit();
         }}
       >
-        <form.Field name="name">
-          {(field) => {
-            const isInvalid =
-              field.state.meta.isTouched && !field.state.meta.isValid;
-            return (
-              <div className="space-y-2">
-                <label htmlFor={field.name}>Name</label>
-                <Input
-                  id={field.name}
-                  value={field.state.value}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
-                {isInvalid && field.state.meta.errors?.length > 0 && (
-                  <p className="text-sm text-red-500">
-                    {field.state.meta.errors[0]?.message}
-                  </p>
-                )}
-              </div>
-            );
-          }}
-        </form.Field>
-
         <form.Field name="email">
           {(field) => {
             const isInvalid =
@@ -105,10 +81,10 @@ const SimpleForm = () => {
             );
           }}
         </form.Field>
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Login</Button>
       </form>
     </div>
   );
 };
 
-export default SimpleForm;
+export default LoginForm;
