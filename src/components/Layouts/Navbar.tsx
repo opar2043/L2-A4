@@ -77,7 +77,7 @@ const Navbar1 = ({
     },
     {
       title: "Dashboard",
-      url: "/dashboard",
+      url: "/dashboards",
     },
   ],
   auth = {
@@ -94,7 +94,7 @@ const Navbar1 = ({
           <div className="flex items-center gap-6">
             {/* Logo */}
             
-              <span className="text-xl italic font-bold textcolor font-semibold tracking-tighter">
+              <span className="text-xl italic textcolor font-semibold tracking-tighter">
                 FOODHUB
                 </span>
               
