@@ -1,12 +1,8 @@
 "use client";
-
-import { Book, Menu, Sunset, Trees, Zap } from "lucide-react";
-
+import { Menu, ShoppingCart } from "lucide-react";
 import { cn } from "@/lib/utils";
-
 import {
   Accordion,
-  AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
@@ -15,17 +11,10 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Link from "next/link";
 import Image from "next/image";
 import { ModeToggle } from "@/components/ui/ModeToggle";
@@ -60,7 +49,6 @@ interface Navbar1Props {
 }
 
 const Navbar1 = ({
-
   menu = [
     {
       title: "About",
@@ -93,14 +81,12 @@ const Navbar1 = ({
         <nav className="hidden items-center justify-between lg:flex">
           <div className="flex items-center gap-6">
             {/* Logo */}
-            
-              <span className="text-xl italic textcolor font-semibold tracking-tighter">
-                FOODHUB
-                </span>
-              
-           
+
+            <span className="text-xl italic textcolor font-semibold tracking-tighter">
+              FOODHUB
+            </span>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-4 items-center">
             <div className="flex items-center">
               <NavigationMenu>
                 <NavigationMenuList>
@@ -108,14 +94,20 @@ const Navbar1 = ({
                 </NavigationMenuList>
               </NavigationMenu>
             </div>
-            <button className="bgcolor text-sm font-semibold textcolor px-5 py-0.5 rounded-sm ">
+
+            {/* Cart Icon */}
+            <Link href="/cart" className="relative">
+              <ShoppingCart className="w-5 h-5 text-black" />
+              <span className="absolute -top-1.5 -right-1.5 bg-black text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
+                0
+              </span>
+            </Link>
+
+            <button className="bgcolor text-sm font-semibold textcolor px-5 py-1.5 rounded-sm">
               <Link href={auth.login.url}>{auth.login.title}</Link>
             </button>
-            <ModeToggle />
 
-            {/* <Button asChild size="sm">
-              <Link href={auth.signup.url}>{auth.signup.title}</Link>
-            </Button> */}
+            <ModeToggle />
           </div>
         </nav>
 
@@ -124,12 +116,16 @@ const Navbar1 = ({
           <div className="flex items-center justify-between ">
             {/* Logo */}
             <div className="flex items-center gap-2">
-
-
               <p className="textcolor font-bold">Foodhub</p>
             </div>
 
             <div className="flex items-center gap-3">
+              <Link href="/cart" className="relative">
+                <ShoppingCart className="w-5 h-5 text-black" />
+                <span className="absolute -top-2 -right-2 bg-black text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                  0
+                </span>
+              </Link>
               <Sheet>
                 <SheetTrigger asChild>
                   <Button variant="outline" size="icon">
@@ -137,7 +133,6 @@ const Navbar1 = ({
                   </Button>
                 </SheetTrigger>
                 <SheetContent className="overflow-y-auto">
-
                   <div className="flex flex-col gap-6 p-4">
                     <Accordion
                       type="single"

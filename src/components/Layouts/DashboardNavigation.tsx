@@ -14,7 +14,7 @@ type Role = "admin" | "customer" | "provider";
 
 const DashboardNavigation = () => {
   // 🔥 Replace this with real user data later (from session/db)
-  const user = { role: "admin" as Role };
+  const user = { role: "provider" as Role };
 
   return (
     <div className="space-y-4">

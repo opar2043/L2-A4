@@ -8,7 +8,7 @@ import { authClient } from "@/lib/auth-client";
 
 const fromSchema = z.object({
   password: z.string().min(6, "Password must be 6 character"),
-email: z.string().email("Invalid email address")
+  email: z.string().email("Invalid email address")
 });
 
 const LoginForm = () => {
