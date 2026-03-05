@@ -103,7 +103,7 @@ const Navbar1 = ({
               </span>
             </Link>
 
-            <button className="bgcolor text-sm font-semibold textcolor px-5 py-1.5 rounded-sm">
+            <button className="bgcolor text-sm font-semibold textcolor px-5 py-1.5 rounded-sm text-slate-950">
               <Link href={auth.login.url}>{auth.login.title}</Link>
             </button>
 

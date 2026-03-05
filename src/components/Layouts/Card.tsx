@@ -1,6 +1,8 @@
 import Link from "next/link";
+import Button from "../clientHandler/Button";
+import { Menu } from "../types/menu.type";
 
-export default function Card({ item }) {
+export default function Card({ item  }) {
   return (
     <Link href={`/menu/${item._id}`} className="border border-gray-200 rounded-sm overflow-hidden hover:shadow-lg transition bg-white">
       {/* Image with availability overlay */}
@@ -39,17 +41,10 @@ export default function Card({ item }) {
           ${item.price}
         </p>
 
-        {/* Add to Cart Button */}
-        <button
-          disabled={!item.availability}
-          className={`w-full py-2 rounded-sm text-sm font-medium transition ${
-            item.availability
-              ? "bg-[#F9BE5E] hover:bg-[#e6ad4d] text-black"
-              : "bg-gray-300 text-gray-500 cursor-not-allowed"
-          }`}
-        >
-          Add to Cart
-        </button>
+{/* i got this error in buttun  */}
+{/* Type '{ children: string; item: Menu; }' is not assignable to type 'IntrinsicAttributes & Menu'.
+  Property 'children' does not exist on type 'IntrinsicAttributes & Menu'. */}
+        <Button item= {item as Menu}> </Button>
       </div>
     </Link>
   );
