@@ -5,6 +5,7 @@ import { Input } from "../ui/input";
 import * as z from "zod";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 const fromSchema = z.object({
   name: z.string().min(1, "This Field is required"),
@@ -13,6 +14,7 @@ email: z.string().email("Invalid email address")
 });
 
 const SimpleForm = () => {
+  const router = useRouter();
   const form = useForm({
     defaultValues: {
       name: "",
@@ -23,18 +25,25 @@ const SimpleForm = () => {
       onSubmit: fromSchema,
     },
     onSubmit: async ({ value }) => {
-      const toastId = toast.loading("Creationg User");
+      const toastId = toast.loading("Creating User");
       try {
         const { data, error } = await authClient.signUp.email(value);
-        toast.success("User Created Succesfully" , {id : toastId})
+        if (error) {
+          toast.error(error.message || "Something went wrong", { id: toastId });
+        } else {
+          toast.success("User Created Successfully", { id: toastId });
+          setTimeout(() => {
+            router.push("/dashboard");
+          }, 1000);
+        }
       } catch (error) {
-        toast.error("Something went wrong" , {id: toastId})
+        toast.error("Something went wrong", { id: toastId });
       }
     },
   });
 
   return (
-    <div>
+    <div className="space-y-4">
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -47,11 +56,15 @@ const SimpleForm = () => {
               field.state.meta.isTouched && !field.state.meta.isValid;
             return (
               <div className="space-y-2">
-                <label htmlFor={field.name}>Name</label>
+                <label htmlFor={field.name} className="text-sm font-medium text-gray-700">
+                  Full Name
+                </label>
                 <Input
                   id={field.name}
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
+                  placeholder="John Doe"
+                  className="w-full"
                 />
                 {isInvalid && field.state.meta.errors?.length > 0 && (
                   <p className="text-sm text-red-500">
@@ -69,11 +82,16 @@ const SimpleForm = () => {
               field.state.meta.isTouched && !field.state.meta.isValid;
             return (
               <div className="space-y-2">
-                <label htmlFor={field.name}>Email</label>
+                <label htmlFor={field.name} className="text-sm font-medium text-gray-700">
+                  Email Address
+                </label>
                 <Input
                   id={field.name}
+                  type="email"
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
+                  placeholder="john@example.com"
+                  className="w-full"
                 />
                 {isInvalid && field.state.meta.errors?.length > 0 && (
                   <p className="text-sm text-red-500">
@@ -90,11 +108,16 @@ const SimpleForm = () => {
               field.state.meta.isTouched && !field.state.meta.isValid;
             return (
               <div className="space-y-2">
-                <label htmlFor={field.name}>Password</label>
+                <label htmlFor={field.name} className="text-sm font-medium text-gray-700">
+                  Password
+                </label>
                 <Input
                   id={field.name}
+                  type="password"
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full"
                 />
                 {isInvalid && field.state.meta.errors?.length > 0 && (
                   <p className="text-sm text-red-500">
@@ -105,7 +128,9 @@ const SimpleForm = () => {
             );
           }}
         </form.Field>
-        <Button type="submit">Submit</Button>
+        <Button type="submit" className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600">
+          Create Account
+        </Button>
       </form>
     </div>
   );

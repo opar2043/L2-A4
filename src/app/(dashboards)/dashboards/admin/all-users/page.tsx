@@ -48,6 +48,7 @@ export default async function AllUsersPage() {
                 <TableHead>Name</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Role</TableHead>
+                <TableHead>Status</TableHead>
                 <TableHead className="text-right pr-6">
                   Actions
                 </TableHead>
@@ -80,6 +81,18 @@ export default async function AllUsersPage() {
                     </span>
                   </TableCell>
 
+                  <TableCell>
+                    <span
+                      className={`px-3 py-1 text-xs rounded-full font-medium ${
+                        user.status === "SUSPENDED"
+                          ? "bg-orange-100 text-orange-600"
+                          : "bg-green-100 text-green-600"
+                      }`}
+                    >
+                      {user.status || "ACTIVE"}
+                    </span>
+                  </TableCell>
+
                   <TableCell className="text-right pr-6">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -100,6 +113,14 @@ export default async function AllUsersPage() {
                           {user.role === "admin"
                             ? "Make Customer"
                             : "Make Admin"}
+                        </DropdownMenuItem>
+
+                        <DropdownMenuSeparator />
+
+                        <DropdownMenuItem>
+                          {user.status === "SUSPENDED"
+                            ? "Activate User"
+                            : "Suspend User"}
                         </DropdownMenuItem>
 
                         <DropdownMenuSeparator />

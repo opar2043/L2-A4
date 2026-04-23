@@ -1,8 +1,8 @@
 import Link from "next/link";
-import Button from "../clientHandler/Button";
 import { Menu } from "../types/menu.type";
+import { Button } from "../ui/button";
 
-export default function Card({ item  }) {
+export default function Card({ item }: { item: Menu }) {
   return (
     <Link href={`/menu/${item._id}`} className="border border-gray-200 rounded-sm overflow-hidden hover:shadow-lg transition bg-white">
       {/* Image with availability overlay */}
